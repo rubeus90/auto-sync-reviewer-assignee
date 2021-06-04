@@ -5,9 +5,10 @@ inputs:
     description: 'Github token'
     required: true
     default: 'default'
-outputs:
-  message:
-    description: 'Output message'
+  exclude:
+    description: 'List of Github logins to be ignored during synchronization, separated by a comma'
+    required: false
+    default: ''
 runs:
   using: 'node12'
   main: 'dist/index.js'
