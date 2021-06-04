@@ -14,9 +14,9 @@ async function run() {
             pull_number: context.payload.pull_request.number,
         });
 
-        console.log(context.eventName)
-        console.log(pullRequest.assignees)
-        console.log(pullRequest.requested_reviewers)
+        core.info(context.eventName)
+        core.info(pullRequest.assignees)
+        core.info(pullRequest.requested_reviewers)
     } catch (error) {
         core.setFailed(error.message)
     }
