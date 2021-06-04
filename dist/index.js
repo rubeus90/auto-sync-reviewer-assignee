@@ -6147,6 +6147,8 @@ const github = __nccwpck_require__(366)
 async function execute() {
     try {
         const token = core.getInput("token", {required: true})
+        const excludeList = core.getInput("exclude").split(",")
+
         const octokit = github.getOctokit(token)
 
         const context = github.context
@@ -6168,7 +6170,7 @@ async function execute() {
         switch(context.payload.action) {
             case 'assigned':
             case 'unassigned':
-                const reviewersToAdd = assigneeLogins.filter(login => !reviewerLogins.includes(login))
+                const reviewersToAdd = assigneeLogins.filter(login => !excludeList.includes(login) && !reviewerLogins.includes(login))
                 if (reviewersToAdd.length > 0) {
                     await octokit.rest.pulls.requestReviewers({
                         owner,
@@ -6177,7 +6179,7 @@ async function execute() {
                         reviewers: reviewersToAdd,
                     })
                 }
-                const reviewersToRemove = reviewerLogins.filter(login => !assigneeLogins.includes(login))
+                const reviewersToRemove = reviewerLogins.filter(login => !excludeList.includes(login) && !assigneeLogins.includes(login))
                 if (reviewersToRemove.length > 0) {
                     await octokit.rest.pulls.removeRequestedReviewers({
                         owner,
@@ -6189,7 +6191,7 @@ async function execute() {
                 break
             case 'review_requested':
             case 'review_request_removed':
-                const assigneesToAdd = reviewerLogins.filter(login => !assigneeLogins.includes(login))
+                const assigneesToAdd = reviewerLogins.filter(login => !excludeList.includes(login) && !assigneeLogins.includes(login))
                 if (assigneesToAdd.length > 0) {
                     await octokit.rest.issues.addAssignees({
                         owner,
@@ -6198,7 +6200,7 @@ async function execute() {
                         assignees: assigneesToAdd,
                       })
                 }
-                const assigneesToRemove = assigneeLogins.filter(login => !reviewerLogins.includes(login))
+                const assigneesToRemove = assigneeLogins.filter(login => !excludeList.includes(login) && !reviewerLogins.includes(login))
                 if (assigneesToRemove.length > 0) {
                     await octokit.rest.issues.removeAssignees({
                         owner,
