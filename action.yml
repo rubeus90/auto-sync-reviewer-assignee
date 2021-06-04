@@ -1,0 +1,13 @@
+name: 'Auto sync Reviewers with Assignees'
+description: 'Synchronize the list of reviewers with the list of assignees on a PR'
+inputs:
+  token:
+    description: 'Github token'
+    required: true
+    default: 'default'
+outputs:
+  message:
+    description: 'Output message'
+runs:
+  using: 'node12'
+  main: 'index.js'

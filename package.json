@@ -1,0 +1,24 @@
+{
+  "name": "auto-sync-reviewer-assignee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubeus90/auto-sync-reviewer-assignee.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rubeus90/auto-sync-reviewer-assignee/issues"
+  },
+  "homepage": "https://github.com/rubeus90/auto-sync-reviewer-assignee#readme",
+  "dependencies": {
+    "@actions/core": "^1.3.0",
+    "@actions/github": "^5.0.0"
+  }
+}
