@@ -27,7 +27,7 @@ jobs:
   sync_reviewers_assignees:
     runs-on: ubuntu-latest
     steps:
-    - uses: rubeus/auto-sync-reviewer-assignee
+    - uses: rubeus90/auto-sync-reviewer-assignee@v1.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         exclude: 'user1,user2'
