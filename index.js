@@ -4,7 +4,7 @@ const github = require('@actions/github')
 async function execute() {
     try {
         const token = core.getInput("token", {required: true})
-        const excludeList = core.getInput("exclude").split(",")
+        let excludeList = core.getInput("exclude").split(",")
 
         const octokit = github.getOctokit(token)
 
@@ -20,8 +20,13 @@ async function execute() {
             repo,
             pull_number,
         });
+        console.log("coucou")
+        console.log(context)
         const assigneeLogins = pullRequest.assignees.map(assignee => assignee.login)
         const reviewerLogins = pullRequest.requested_reviewers.map(reviewer => reviewer.login)
+
+        // Add the author of the pull request to the exclude list, since they can't be a reviewer
+        excludeList.push(context.actor)
 
         // Add and remove reviewers/assignees when there's a difference between the 2 lists
         switch(context.payload.action) {
