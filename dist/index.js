@@ -6172,10 +6172,12 @@ async function execute() {
             case 'unassigned':
                 const reviewersToAdd = assigneeLogins.filter(login => !excludeList.includes(login) && !reviewerLogins.includes(login))
                 if (reviewersToAdd.length > 0) {
+                    core.info('Request reviewers : ' + reviewersToAdd)
                     await octokit.rest.pulls.requestReviewers({owner, repo, pull_number, reviewers: reviewersToAdd})
                 }
                 const reviewersToRemove = reviewerLogins.filter(login => !excludeList.includes(login) && !assigneeLogins.includes(login))
                 if (reviewersToRemove.length > 0) {
+                    core.info('Remove reviewers : ' + reviewersToRemove)
                     await octokit.rest.pulls.removeRequestedReviewers({owner, repo, pull_number, reviewers: reviewersToRemove})
                 }
                 break
@@ -6183,10 +6185,12 @@ async function execute() {
             case 'review_request_removed':
                 const assigneesToAdd = reviewerLogins.filter(login => !excludeList.includes(login) && !assigneeLogins.includes(login))
                 if (assigneesToAdd.length > 0) {
+                    core.info('Add assignees : ' + assigneesToAdd)
                     await octokit.rest.issues.addAssignees({owner, repo, issue_number, assignees: assigneesToAdd})
                 }
                 const assigneesToRemove = assigneeLogins.filter(login => !excludeList.includes(login) && !reviewerLogins.includes(login))
                 if (assigneesToRemove.length > 0) {
+                    core.info('Remove assignees : ' + assigneesToRemove)
                     await octokit.rest.issues.removeAssignees({owner, repo, issue_number, assignees: assigneesToRemove})
                 }
                 break
