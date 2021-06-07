@@ -20,7 +20,9 @@ async function execute() {
         const reviewerLogins = pullRequest.requested_reviewers.map(reviewer => reviewer.login)
 
         // Add the author of the pull request to the exclude list, since they can't be a reviewer
-        excludeList.push(context.actor)
+        if (!excludeList.includes(pullRequest.user.login)) {
+            excludeList.push(pullRequest.user.login)
+        }
 
         // Add and remove reviewers/assignees when there's a difference between the 2 lists
         core.info('Workflow triggered on action : ' + context.payload.action)
